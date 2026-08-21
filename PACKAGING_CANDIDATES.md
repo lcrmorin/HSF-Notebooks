@@ -84,6 +84,21 @@ standard model family rather than reusing this notebook's version as-is.
 Everything else in the notebook is a one-off table/chart tied to a
 specific source dataset.
 
+## Chapter 6
+
+Built (2026-08-21). Everything here — the divestment/institutional-
+ownership tables and the ShareAction voting-panel slices (by year, topic,
+region, AUM-weighting) — is tied to this dataset's own specific column
+layout (the per-year `Resolutions`/`Alphabetical` sheets, or the merged
+multi-year panel's `Feuil1` layout), not a generic reusable primitive.
+Nothing tracked as a packaging candidate from this notebook.
+
+## Chapter 7
+
+Built (2026-08-21). No `.m` source to translate (see `CHAPTERS.md`) — this
+notebook is a one-off pair of UN SEEA survey-table reads and ranked bar
+charts, not a generic primitive. Nothing tracked as a packaging candidate.
+
 ## Chapter 5f
 
 Built (2026-08-21). This completes the Chapter 5 biodiversity case study
