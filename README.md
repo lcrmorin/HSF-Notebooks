@@ -20,19 +20,28 @@ small sample data they need to run.
 
 ```
 notebooks/
-  hsf/          one notebook per HSF chapter -- 00 = tutorial, 01-17 = book chapters
-  examples/     general quanttoolbox walkthroughs, numbered from 0
-                (00_building_blocks, 01_risk_budgeting, 02_black_litterman,
-                03_mean_variance, 04_whittle, 05_regression, 06_svm) --
-                the notebook equivalent of quanttoolbox's own docs/examples
+  hsf/          one notebook per HSF chapter -- 00 = tutorial, 01-17 = book
+                chapters; a chapter big enough to split into clearly
+                separate topics gets a lettered pair instead (02a, 02b, ...)
 data/           small sample datasets a notebook reads directly (xlsx/csv);
                 large or licensed source data stays out of git — see each
                 chapter notebook's own data-provenance note
 ```
 
+`quanttoolbox`'s own worked examples (bond pricing, portfolio construction,
+risk budgeting, ...) live in `QuantToolBox`'s own `docs/examples/` and
+aren't duplicated here.
+
 ## Status
 
 See [`CHAPTERS.md`](CHAPTERS.md) for the chapter-by-chapter tracker.
+
+Some notebooks define their own numeric helpers rather than reaching for
+`quanttoolbox`, when a function is specific to one chapter or it isn't
+yet clear whether it's reused elsewhere. See
+[`PACKAGING_CANDIDATES.md`](PACKAGING_CANDIDATES.md) for which of those
+are clean/reusable enough to be worth promoting into `quanttoolbox`
+later.
 
 ## Setup
 

@@ -1,6 +1,7 @@
 quanttoolbox
 pandas>=2.1
 numpy>=1.26
+scipy>=1.11
 matplotlib>=3.8
 openpyxl>=3.1
 jupyterlab>=4.0
