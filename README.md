@@ -13,10 +13,11 @@ toolbox of sustainable-finance-specific functions (copulas, credit risk
 models, Genz quadrature, carbon-budget/ESG measures) that doesn't exist in
 `quanttoolbox` yet. That toolbox is being ported directly into
 `quanttoolbox` itself rather than duplicated here — this repo only holds
-notebooks, plus whatever small sample data they need to run. A read-only
-copy of the original MATLAB toolbox source lives at
-`QuantToolBox/reference/hsf_toolbox_matlab/` for reference during that
-port.
+notebooks, plus whatever small sample data they need to run. The original
+MATLAB toolbox source has been moved (not copied) out of `hfs-archive` to
+`QuantToolBox/reference/hsf_toolbox_matlab/`, as source material for that
+port; `hfs-archive`'s old `Examples/tutorial/` MATLAB-101 lessons moved
+the other way, into `hfs-archive`'s `HSF/0. Toolbox/tutorial/`.
 
 ## Structure
 
