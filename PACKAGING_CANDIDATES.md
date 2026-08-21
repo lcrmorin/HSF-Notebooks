@@ -39,3 +39,17 @@ candidate. `factor_esg_minvar_comparison` (the CAPM-vs-two-factor,
 unconstrained-vs-long-only comparison table builder) was *not* tracked:
 it's a table-formatting wrapper tied to this notebook's specific
 side-by-side presentation, not a reusable primitive.
+
+## Chapter 3c
+
+Built (2026-08-21). This notebook is almost entirely chart-building
+code reproducing the book's illustrative bar/scatter figures from
+hardcoded source values, plus thin `pandas.read_excel` reads for the
+five real-data sections — `quanttoolbox.portfolio.tracking_error.
+te_portfolio` (already existing) is the only optimizer call. The
+helpers defined here (`plot_equity_alpha`, `lasso_beta_paths`,
+`quintile_fit_plot`, `pillar_quintile_grid`, `q1_minus_q5_alpha`) are
+all tied to this notebook's specific figure layouts and hardcoded data
+shapes (e.g. `q1_minus_q5_alpha` expects the exact (quintile, period)
+array shape used only in section 6) — same judgment as `03a`'s
+`factor_esg_minvar_comparison`, none tracked as packaging candidates.
