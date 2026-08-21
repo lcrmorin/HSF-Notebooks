@@ -4,7 +4,7 @@ Status legend: ⬜ not started · 🟨 in progress · ✅ notebook done
 
 | # | Chapter | `.m` scripts | Status | Notes |
 |---|---|---|---|---|
-| 0 | Toolbox | 172 | ⬜ | Not a chapter notebook — this is the copula/credit/genz/hsf/stats/tools function library, being ported directly into `quanttoolbox` (see that repo's `docs/migration_map.md` once the port starts). A `00_toolbox.ipynb` primer notebook can follow once enough of it lands there. |
+| 0 | Toolbox | 163 (163 vendored for reference; `tools/`+`external/` excluded) | ⬜ | Not a chapter notebook — this is the bond/copula/credit/genz/hsf/maths/stats function library. A reference copy of the MATLAB source now lives at `QuantToolBox/reference/hsf_toolbox_matlab/`, and the planned Python module mapping is in that repo's `docs/migration_map.md` ("HSF toolbox port (planned)"). A `00_toolbox.ipynb` primer notebook can follow once enough of it lands there. |
 | 1 | Introduction | 12 (9 chapter scripts) | ✅ | `notebooks/hsf/01_introduction.ipynb`. Needs only pandas/numpy/matplotlib — no toolbox dependency. Two near-duplicate script pairs (`chap1_pri1.m`/`pri1a.m`, and the `pri2`/`pri2a`/`pri2b.m` trio across data vintages) consolidated into one section each, using the most recent (2024) PRI data vintage. Reads `pri_regulation_2024.xlsx`/`pri_signatory_2024.xlsx` directly via `pandas.read_excel` instead of the original's `xlsread` → `.mat` round trip. |
 | 2 | ESG Scoring | 56 | ⬜ | Ratings, scoring methodologies (Gini/KS backtests), Markov rating-transition models. |
 | 3 | ESG Investing | 69 | ⬜ | |
@@ -25,8 +25,21 @@ Status legend: ⬜ not started · 🟨 in progress · ✅ notebook done
 
 ## Tutorials (not chapter-specific)
 
-Separate from the HSF chapters: `notebooks/tutorials/` will hold general
+Separate from the HSF chapters: `notebooks/tutorials/` holds general
 `quanttoolbox` walkthroughs — the notebook equivalent of the package's own
-`docs/examples/` deep dives (bisection & linear algebra building blocks,
-risk budgeting, Black-Litterman, mean-variance/tracking error, Whittle
-estimation, regression, SVM). None started yet.
+`docs/examples/` deep dives, numbered from 0 the same way `notebooks/hsf/`
+is. This replaces `quanttoolbox`'s own `Examples/tutorial/` folder (11
+generic MATLAB-101 lessons, unrelated to any quanttoolbox function), which
+has been dropped from that repo's `docs/migration_map.md` tracker in favor
+of these — quanttoolbox-specific rather than MATLAB-generic. None started
+yet.
+
+| # | Notebook | Based on | Status |
+|---|---|---|---|
+| 0 | `00_building_blocks.ipynb` | `docs/examples/building_blocks.md` (bisection, numerical gradient/Hessian, proximal operators, vec/vech) | ⬜ |
+| 1 | `01_risk_budgeting.ipynb` | `docs/examples/risk_budgeting.md` | ⬜ |
+| 2 | `02_black_litterman.ipynb` | `docs/examples/black_litterman.md` | ⬜ |
+| 3 | `03_mean_variance.ipynb` | `docs/examples/mean_variance.md` | ⬜ |
+| 4 | `04_whittle.ipynb` | `docs/examples/whittle.md` | ⬜ |
+| 5 | `05_regression.ipynb` | `docs/examples/regression.md` | ⬜ |
+| 6 | `06_svm.ipynb` | `docs/examples/svm.md` | ⬜ |

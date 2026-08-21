@@ -13,16 +13,23 @@ toolbox of sustainable-finance-specific functions (copulas, credit risk
 models, Genz quadrature, carbon-budget/ESG measures) that doesn't exist in
 `quanttoolbox` yet. That toolbox is being ported directly into
 `quanttoolbox` itself rather than duplicated here — this repo only holds
-notebooks, plus whatever small sample data they need to run.
+notebooks, plus whatever small sample data they need to run. A read-only
+copy of the original MATLAB toolbox source lives at
+`QuantToolBox/reference/hsf_toolbox_matlab/` for reference during that
+port.
 
 ## Structure
 
 ```
 notebooks/
   hsf/          one notebook per HSF chapter (00 = toolbox primer, 01-17 = chapters)
-  tutorials/    general quanttoolbox tutorials (bisection, risk budgeting,
-                Black-Litterman, mean-variance, Whittle, regression, SVM, ...),
-                the notebook equivalent of quanttoolbox's own docs/examples
+  tutorials/    general quanttoolbox tutorials, numbered from 0
+                (00_building_blocks, 01_risk_budgeting, 02_black_litterman,
+                03_mean_variance, 04_whittle, 05_regression, 06_svm) —
+                the notebook equivalent of quanttoolbox's own docs/examples,
+                and the direct replacement for quanttoolbox's old
+                Examples/tutorial/ MATLAB-101 lessons (dropped from that
+                repo's migration_map.md tracker in favor of these)
 data/           small sample datasets a notebook reads directly (xlsx/csv);
                 large or licensed source data stays out of git — see each
                 chapter notebook's own data-provenance note
