@@ -4,7 +4,7 @@ Status legend: ⬜ not started · 🟨 in progress · ✅ notebook done
 
 | # | Chapter | `.m` scripts | Status | Notes |
 |---|---|---|---|---|
-| 0 | Toolbox | 167 (moved out of `hfs-archive`; `tools/`+`external/` left behind) | ⬜ | Not a chapter notebook — this is the bond/copula/credit/genz/hsf/maths/stats function library, plus 4 loose `copula*.m` demo scripts. The MATLAB source has been moved (not copied) to `QuantToolBox/reference/hsf_toolbox_matlab/` -- it no longer lives in `hfs-archive`. Planned Python module mapping is in that repo's `docs/migration_map.md` ("HSF toolbox port (planned)"). A `00_toolbox.ipynb` primer notebook can follow once enough of it lands there. This chapter-0 folder in `hfs-archive` now also holds `tutorial/` -- the old `Examples/tutorial/` MATLAB-101 lessons, moved here since they're chapter-0 groundwork too (see the Tutorials section below for their notebook replacement). |
+| 0 | Toolbox | 167 (bond/copula/credit/genz/hsf/maths/stats + 4 loose `copula*.m` demo scripts) | ⬜ | Not a chapter notebook — this is the sustainable-finance function library. Its MATLAB source lives in `QuantToolBox` at `reference/hsf_toolbox_matlab/`; the planned Python module mapping is that repo's `docs/migration_map.md` ("HSF toolbox port (planned)"). A `00_toolbox.ipynb` primer notebook can follow once enough of the port lands there. |
 | 1 | Introduction | 12 (9 chapter scripts) | ✅ | `notebooks/hsf/01_introduction.ipynb`. Needs only pandas/numpy/matplotlib — no toolbox dependency. Two near-duplicate script pairs (`chap1_pri1.m`/`pri1a.m`, and the `pri2`/`pri2a`/`pri2b.m` trio across data vintages) consolidated into one section each, using the most recent (2024) PRI data vintage. Reads `pri_regulation_2024.xlsx`/`pri_signatory_2024.xlsx` directly via `pandas.read_excel` instead of the original's `xlsread` → `.mat` round trip. |
 | 2 | ESG Scoring | 56 | ⬜ | Ratings, scoring methodologies (Gini/KS backtests), Markov rating-transition models. |
 | 3 | ESG Investing | 69 | ⬜ | |
@@ -28,11 +28,10 @@ Status legend: ⬜ not started · 🟨 in progress · ✅ notebook done
 Separate from the HSF chapters: `notebooks/tutorials/` holds general
 `quanttoolbox` walkthroughs — the notebook equivalent of the package's own
 `docs/examples/` deep dives, numbered from 0 the same way `notebooks/hsf/`
-is. This replaces `quanttoolbox`'s own `Examples/tutorial/` folder (11
-generic MATLAB-101 lessons, unrelated to any quanttoolbox function), which
-has been dropped from that repo's `docs/migration_map.md` tracker in favor
-of these — quanttoolbox-specific rather than MATLAB-generic. None started
-yet.
+is. `quanttoolbox`'s `docs/migration_map.md` example tracker excludes the
+original MATLAB toolbox's generic `tutorial/` lessons (11 files,
+unrelated to any quanttoolbox function) and points here instead — these
+notebooks are the quanttoolbox-specific replacement. None started yet.
 
 | # | Notebook | Based on | Status |
 |---|---|---|---|
