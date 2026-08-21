@@ -20,6 +20,8 @@ Status legend: 🔵 candidate (used once so far) · 🟡 confirmed reusable
 | `stacked_issuance_outstanding(data, names, years, ...)` / `load_cbi_sheet(xlsx_name, sheet)` | `04b_gss_bond_market.ipynb` | Reads a "year-row + category-rows" wide time-series sheet (the Climate Bonds Initiative data layout used throughout Ch.4's bond-market data) and renders the standard issuance/cumulative-outstanding two-panel chart plus an end-of-sample share table. | Reused 6 times within `04b` alone across the green- and social-bond breakdowns; the same "wide time-series by category, cumulative stock chart" shape is plausible for other market-sizing data later in the book (e.g. carbon-market or transition-finance issuance in Ch.9-11). Not ESG-specific in its mechanics. | 🔵 |
 | `bond_ytm(t, cashflows, price)` | `04c_the_greenium.ipynb` | Newton's-method solver for the yield-to-maturity implied by a cashflow schedule and price — general fixed-income primitive, not ESG-specific. | A basic building block (`compute_bond_ytm.m`'s Python counterpart) likely needed again anywhere the book prices a bond from first principles. | 🔵 |
 | `blended_finance_simulation(N0, D_junior, Ni, Ri, ci, coupon_rate_senior, nt_default)` | `05a_impact_market_instruments.ipynb` | Two-tranche (junior/senior) cash-flow waterfall: given a portfolio default path, allocates cumulative losses and coupon income between tranches and returns each tranche's annualized return over time. | A generic structured-finance/blended-finance primitive, not ESG-specific — reused twice within `05a` (deterministic scenarios and a Monte Carlo simulation); any later chapter touching tranched/blended structures is a plausible second-notebook reuse. | 🔵 |
+| `fit_power_law(fit_table, area_units)` | `05b_biodiversity_extinction_theory.ipynb` | Backs out a power-law exponent/intercept ($S = c\,A^z$) for each row of a table by averaging $\log(S/S_{\text{ref}})/\log(A/A_{\text{ref}})$ across columns, given one reference column. | A generic scaling-law fitting utility, not biodiversity-specific — any later figure that tabulates a quantity at several scales and wants the implied power-law exponent (not just this chapter's species-area curves) is a plausible reuse. | 🔵 |
+| `species_abundance_distribution(n_i, brk)` / `species_area_relationship(...)` / `endemics_area_relationship(...)` / `hurlbert_rarefaction(n_i, m)` | `05c_biodiversity_abundance_models.ipynb` | Community-ecology primitives: abundance-frequency/octave binning, random-placement species-area and endemics-area curves, and Hurlbert's exact individual-based rarefaction formula. | Reimplementations of custom MATLAB toolbox functions not shipped in `hfs-archive`; reused repeatedly within `05c` across four different real datasets (Whittaker, Verneaux, Condit, plus synthetic examples) — any later chapter touching species counts/community diversity (e.g. more of the biodiversity case study) is a near-certain second-notebook reuse. | 🔵 |
 
 ## Chapter 2b
 
@@ -56,3 +58,43 @@ all tied to this notebook's specific figure layouts and hardcoded data
 shapes (e.g. `q1_minus_q5_alpha` expects the exact (quintile, period)
 array shape used only in section 6) — same judgment as `03a`'s
 `factor_esg_minvar_comparison`, none tracked as packaging candidates.
+
+## Chapter 5d
+
+Built (2026-08-21). Nine FAOSTAT/OECD/Global-Footprint-Network/FAO-FRA/
+plastics-industry themes, all one-off `pandas.pivot_table`/`groupby`
+reshaping tied to a specific source table's own column layout (crop
+production groupings, food-balance element codes, FRA forest-database
+ISO3 cross-referencing, etc.) — none of it is a generic primitive a later
+notebook would plausibly reuse unchanged, unlike `05c`'s community-ecology
+functions. Nothing tracked as a packaging candidate from this notebook.
+
+## Chapter 5e
+
+Built (2026-08-21). The reimplemented dose-response functions
+(`drc_log_logistic`, `drc_log_normal`, `drc_weibull2`, `drc_hormetic1`,
+`drc_hormetic2`) are generic ecotoxicology curve-family primitives, not
+biodiversity-specific — but they stand in for the source's own missing
+custom functions under an unverified sign/parameterization convention
+(see the notebook's data-provenance note), so they're deliberately *not*
+tracked here as reusable: promoting an unverified reimplementation into
+the shared toolbox risks compounding the uncertainty into a later chapter.
+If a later chapter needs dose-response curves again, re-derive from the
+standard model family rather than reusing this notebook's version as-is.
+Everything else in the notebook is a one-off table/chart tied to a
+specific source dataset.
+
+## Chapter 5f
+
+Built (2026-08-21). This completes the Chapter 5 biodiversity case study
+(05a-05f) and Chapter 5 overall. The `solve_ivp` right-hand-side functions
+(logistic-with-harvest, theta-logistic, Lotka-Volterra variants,
+4-species competition matrix) are each tied to this notebook's specific
+illustrative parameter choices (the exact `r`, `K`, `epsilon`, interaction-
+matrix values used to reproduce the source's own figures), not generic
+reusable primitives in the way `05c`'s community-ecology functions were —
+a later chapter modeling a different population-dynamics system would
+more sensibly write its own right-hand side against `solve_ivp` directly
+than import one of these. The fisheries/rhino/BII data sections are
+one-off `pandas.read_excel` reads and charts tied to their specific source
+layouts. Nothing tracked as a packaging candidate from this notebook.
