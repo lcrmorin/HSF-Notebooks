@@ -7,28 +7,24 @@ Finance* (the `HSF/` material in
 of the companion MATLAB `QuantToolbox` library.
 
 The original `HSF/` folder is well over a thousand MATLAB scripts (including
-per-chapter data-prep scripts) across 18 chapters (0.
-Toolbox, 1. Introduction, 2. ESG Scoring, ... 17. Data), plus a chapter-0
-toolbox of sustainable-finance-specific functions (copulas, credit risk
-models, Genz quadrature, carbon-budget/ESG measures) that doesn't exist in
-`quanttoolbox` yet. That toolbox is being ported directly into
-`quanttoolbox` itself rather than duplicated here — this repo only holds
-notebooks, plus whatever small sample data they need to run. Its MATLAB
-source lives in `QuantToolBox` at `reference/hsf_toolbox_matlab/`, tracked
-as a planned port in that repo's `docs/migration_map.md` (see also
-[`CHAPTERS.md`](CHAPTERS.md), chapter 0, here).
+per-chapter data-prep scripts) across 18 book chapters (1. Introduction,
+2. ESG Scoring, ... 17. Data), plus a sustainable-finance-specific function
+library (copulas, credit risk models, Genz quadrature, carbon-budget/ESG
+measures) that's being ported directly into `quanttoolbox` rather than
+duplicated here — its MATLAB source lives in `QuantToolBox` at
+`reference/hsf_toolbox_matlab/`, tracked as a planned port in that repo's
+`docs/migration_map.md`. This repo only holds notebooks, plus whatever
+small sample data they need to run.
 
 ## Structure
 
 ```
 notebooks/
-  hsf/          one notebook per HSF chapter (00 = toolbox primer, 01-17 = chapters)
-  tutorials/    general quanttoolbox tutorials, numbered from 0
+  hsf/          one notebook per HSF chapter -- 00 = tutorial, 01-17 = book chapters
+  examples/     general quanttoolbox walkthroughs, numbered from 0
                 (00_building_blocks, 01_risk_budgeting, 02_black_litterman,
-                03_mean_variance, 04_whittle, 05_regression, 06_svm) —
-                the notebook equivalent of quanttoolbox's own docs/examples,
-                and the quanttoolbox-specific replacement for the original
-                MATLAB toolbox's generic tutorial/ lessons (see CHAPTERS.md)
+                03_mean_variance, 04_whittle, 05_regression, 06_svm) --
+                the notebook equivalent of quanttoolbox's own docs/examples
 data/           small sample datasets a notebook reads directly (xlsx/csv);
                 large or licensed source data stays out of git — see each
                 chapter notebook's own data-provenance note
@@ -36,8 +32,7 @@ data/           small sample datasets a notebook reads directly (xlsx/csv);
 
 ## Status
 
-See [`CHAPTERS.md`](CHAPTERS.md) for the chapter-by-chapter tracker (mirrors
-the tracker style used in `quanttoolbox`'s `docs/migration_map.md`).
+See [`CHAPTERS.md`](CHAPTERS.md) for the chapter-by-chapter tracker.
 
 ## Setup
 
