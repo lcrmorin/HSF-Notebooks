@@ -1,0 +1,32 @@
+# Chapter tracker
+
+Status legend: ⬜ not started · 🟨 in progress · ✅ notebook done
+
+| # | Chapter | `.m` scripts | Status | Notes |
+|---|---|---|---|---|
+| 0 | Toolbox | 172 | ⬜ | Not a chapter notebook — this is the copula/credit/genz/hsf/stats/tools function library, being ported directly into `quanttoolbox` (see that repo's `docs/migration_map.md` once the port starts). A `00_toolbox.ipynb` primer notebook can follow once enough of it lands there. |
+| 1 | Introduction | 12 (9 chapter scripts) | ✅ | `notebooks/hsf/01_introduction.ipynb`. Needs only pandas/numpy/matplotlib — no toolbox dependency. Two near-duplicate script pairs (`chap1_pri1.m`/`pri1a.m`, and the `pri2`/`pri2a`/`pri2b.m` trio across data vintages) consolidated into one section each, using the most recent (2024) PRI data vintage. Reads `pri_regulation_2024.xlsx`/`pri_signatory_2024.xlsx` directly via `pandas.read_excel` instead of the original's `xlsread` → `.mat` round trip. |
+| 2 | ESG Scoring | 56 | ⬜ | Ratings, scoring methodologies (Gini/KS backtests), Markov rating-transition models. |
+| 3 | ESG Investing | 69 | ⬜ | |
+| 4 | ESG Products | 55 | ⬜ | |
+| 5 | Impact Investing | 163 | ⬜ | Largest chapter by script count. |
+| 6 | Engagement | 32 | ⬜ | |
+| 7 | Accounting | 0 | ⬜ | No `.m` scripts (2 `.xlsx`, 1 `.png`) — likely a discussion chapter with no code exercises; confirm before deciding whether it needs a notebook at all. |
+| 8 | Economic Modeling | 264 | ⬜ | Largest chapter overall. Likely depends heavily on the DICE temperature model and other `0. Toolbox/hsf/` functions. |
+| 9 | Risk Measures | 52 | ⬜ | Carbon budget/intensity/offsetting measures — depends on `0. Toolbox/hsf/carbon_*` functions. |
+| 10 | Transition Risk | 43 | ⬜ | |
+| 11 | Portfolio Optimization | 80 | ⬜ | Decarbonization-constrained portfolio construction — likely builds directly on `quanttoolbox.portfolio`. |
+| 12 | Physical Risk | 70 | ⬜ | |
+| 13 | Stress Testing | 37 | ⬜ | |
+| 14 | Conclusion | 0 | ⬜ | Empty folder — confirm whether this chapter has any content at all. |
+| 15 | Technical Appendix | 17 | ⬜ | |
+| 16 | Exercise Solution | 10 | ⬜ | |
+| 17 | Data | 0 | ⬜ | Empty folder — likely just a pointer to where chapter datasets live, not a chapter itself. |
+
+## Tutorials (not chapter-specific)
+
+Separate from the HSF chapters: `notebooks/tutorials/` will hold general
+`quanttoolbox` walkthroughs — the notebook equivalent of the package's own
+`docs/examples/` deep dives (bisection & linear algebra building blocks,
+risk budgeting, Black-Litterman, mean-variance/tracking error, Whittle
+estimation, regression, SVM). None started yet.
