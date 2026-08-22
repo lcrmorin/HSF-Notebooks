@@ -34,7 +34,9 @@ See [`CHAPTERS.md`](CHAPTERS.md) for the chapter-by-chapter tracker.
 
 Some notebooks define their own numeric helpers rather than reaching for
 `quanttoolbox`, when a function is specific to one chapter or it isn't
-yet clear whether it's reused elsewhere.
+yet clear whether it's reused elsewhere. Helpers that look generic enough
+to promote later are tracked in
+[`PACKAGING_CANDIDATES.md`](PACKAGING_CANDIDATES.md).
 
 ## Setup
 
