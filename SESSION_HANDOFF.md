@@ -63,7 +63,14 @@ wait, don't hammer it.
   values outside a just-set `ax.set_xlim(...)` can silently expand the
   view to include them (a matplotlib autoscale quirk) — call
   `set_xlim` *after* `set_xticks` when reproducing a source figure whose
-  own tick range extends past its axis limits.
+  own tick range extends past its axis limits. When reproducing a MATLAB
+  figure with `XAxisLocation`/`YAxisLocation = 'origin'` (both spines
+  pinned to zero), matplotlib's default `ax.set_xlabel`/`set_ylabel`
+  placement follows the moved spine and can collide with any text
+  annotations placed near the origin — place the axis titles as
+  free-floating `ax.text()` calls at explicit offsets instead (mirroring
+  MATLAB's own explicit label `Position` overrides), rather than relying
+  on `set_xlabel`/`set_ylabel`.
 - **`quanttoolbox` is not preinstalled in a fresh cloud container** —
   each new session needs `pip install quanttoolbox --break-system-packages`
   before any notebook that imports it (most of Chapters 2-4, and
