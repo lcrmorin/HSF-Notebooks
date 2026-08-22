@@ -30,13 +30,16 @@ aren't duplicated here.
 
 ## Status
 
-See [`CHAPTERS.md`](CHAPTERS.md) for the chapter-by-chapter tracker.
+All 16 chapters are complete — see [`CHAPTERS.md`](CHAPTERS.md) for the
+chapter-by-chapter tracker.
 
-Some notebooks define their own numeric helpers rather than reaching for
-`quanttoolbox`, when a function is specific to one chapter or it isn't
-yet clear whether it's reused elsewhere. Helpers that look generic enough
-to promote later are tracked in
-[`PACKAGING_CANDIDATES.md`](PACKAGING_CANDIDATES.md).
+Notebook helpers that turned out to be generic enough have since been
+promoted into `quanttoolbox` directly, and the notebooks delegate to
+them. A handful stay notebook-local on purpose — either tied to one
+chapter's specific model, or (as with `16d`'s Poisson-binomial PMF
+functions) because the notebook's own point is cross-checking
+independent implementations against each other, which delegating to a
+single shared implementation would defeat.
 
 ## Setup
 
