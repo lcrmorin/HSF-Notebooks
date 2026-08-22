@@ -99,6 +99,26 @@ Built (2026-08-21). No `.m` source to translate (see `CHAPTERS.md`) — this
 notebook is a one-off pair of UN SEEA survey-table reads and ranked bar
 charts, not a generic primitive. Nothing tracked as a packaging candidate.
 
+## Chapter 8 Part 1 (physical climate science)
+
+Built so far (2026-08-22): `08a_physics_energy_balance`,
+`08b_physics_feedbacks_sensitivity`, `08c_physics_ice_albedo`,
+`08d_physics_bifurcations_chaos`,
+`08e_anthropogenic_temperature_carbon_budget`.
+
+`08e` is data-driven rather than first-principles and doesn't add any
+packaging candidates — its `ols_trend` helper and the fuel-source
+cumulative-share computation are both tied to that notebook's specific
+dataset layouts (OWID/HadCRUT/NOAA/FAOSTAT temperature panels, Global
+Carbon Budget columns), not generic reusable primitives.
+
+| Function | Defined in | What it does | Why it's a candidate | Status |
+|---|---|---|---|---|
+| `pdf_normal_ratio(z, mu_x, sigma_x, mu_y, sigma_y)` / `cdf_normal_ratio(t, mu_x, sigma_x, mu_y, sigma_y, lower=0.0)` | `08b_physics_feedbacks_sensitivity.ipynb` | Closed-form density/CDF (Hinkley 1969 / Marsaglia) of the ratio of two independent normal random variables — used here for equilibrium climate sensitivity ECS = ΔF/(-λ) where both ΔF and λ are stochastic. Reimplemented because the source toolbox's own `pdfNormalRatio`/`cdfNormalRatio` were not shipped in `hfs-archive`; treated as a standard textbook result, not a guess, but still unverified against the original source's exact convention. | A generic probability primitive with no climate content — any future chapter needing the distribution of a ratio of two normals (e.g. a valuation multiple, a leverage ratio) could reuse it as-is. | 🔵 |
+| `bisection(f, a, b, tol=1e-10, max_iter=200)` | `08c_physics_ice_albedo.ipynb`, `08d_physics_bifurcations_chaos.ipynb` | Faithful port of `QuantToolbox/optim/bisection.m`, including its specific edge-case contract: returns `NaN` (not an error) when `f(a)` and `f(b)` don't bracket a sign change, rather than assuming a bracket is always valid. | A generic root-finder used throughout the `hfs-archive` MATLAB source wherever `bisection.m` is called. Now reused verbatim in a second notebook (`08d`, to find the cubic normal form's equilibrium in section 4) — the NaN-on-no-bracket behavior matters for correctness of any downstream sweep, so it's worth promoting to a shared `quanttoolbox` helper the next time Chapter 8 needs a root-finder (e.g. DICE equilibria in Part 2). | 🟡 |
+| `ice_albedo(...)` / `ice_albedo_tau(...)` | `08c_physics_ice_albedo.ipynb` | Evaluate the bistable ice-albedo energy-balance model's equilibrium condition and its local relaxation timescale τ=\|c/λ\|, vectorized over a swept parameter. | Tied to this notebook's specific ice-albedo model form (smooth ice-line albedo × single-layer greenhouse) — a plausible reuse if a later Ch.8 notebook revisits the same bistable model (e.g. a coupled or extended version), but not a generic primitive the way `bisection` is. | 🔵 |
+| `missex(x, cond)` | `08d_physics_bifurcations_chaos.ipynb` | Sets elements of `x` to `NaN` wherever `cond` is true, else leaves them unchanged — a direct port of GAUSS's own `missex` function, which the `.m`/GAUSS source uses throughout to split a swept parameter array into a "left of the bifurcation" and "right of the bifurcation" branch for plotting. | A trivial but exact-semantics utility (NaN-masking is easy to get backwards) that will keep recurring anywhere the `hfs-archive` source uses `missex` for branch-splitting — used four times within `08d` section 1 alone. | 🔵 |
+
 ## Chapter 5f
 
 Built (2026-08-21). This completes the Chapter 5 biodiversity case study
