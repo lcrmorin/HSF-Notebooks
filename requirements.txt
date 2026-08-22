@@ -6,3 +6,6 @@ matplotlib>=3.8
 openpyxl>=3.1
 csaps>=1.1
 jupyterlab>=4.0
+pyproj>=3.6
+basemap>=2.0
+basemap-data>=2.0
