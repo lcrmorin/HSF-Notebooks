@@ -56,7 +56,25 @@ wait, don't hammer it.
   string — use `#` comments instead, never docstrings, inside notebook
   cell source. `numpy` 2.4.4 removed `np.trapz` — use
   `scipy.integrate.trapezoid`. `\%` outside LaTeX mathtext renders with
-  a visible backslash in matplotlib — use plain `%`.
+  a visible backslash in matplotlib — use plain `%`. Matplotlib's inline
+  backend auto-displays-and-closes the current figure at the end of
+  every cell — build any multi-panel figure entirely within ONE code
+  cell, never split across cells. Calling `ax.set_xticks(...)` with tick
+  values outside a just-set `ax.set_xlim(...)` can silently expand the
+  view to include them (a matplotlib autoscale quirk) — call
+  `set_xlim` *after* `set_xticks` when reproducing a source figure whose
+  own tick range extends past its axis limits.
+- **`quanttoolbox` is not preinstalled in a fresh cloud container** —
+  each new session needs `pip install quanttoolbox --break-system-packages`
+  before any notebook that imports it (most of Chapters 2-4, and
+  `09e_emission_trend_forecasting`) will execute. Discovered the hard
+  way in the Chapter 9 session: a `python3 -c "import quanttoolbox"`
+  check failed with `ModuleNotFoundError` even though earlier notebooks
+  in the same conversation clearly used it successfully — that earlier
+  "success" was a false read (a markdown-only first cell, not an actual
+  import test), not evidence the package was really available. Always
+  verify with a real import check before trusting that a notebook using
+  `quanttoolbox` will build cleanly in a new container.
 - **Data-provenance philosophy**: read real source data directly via
   `pandas.read_excel` rather than fabricating or hardcoding it, inferring
   column semantics from the *consuming* script's own variable/legend

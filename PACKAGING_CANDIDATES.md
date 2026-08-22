@@ -101,16 +101,21 @@ charts, not a generic primitive. Nothing tracked as a packaging candidate.
 
 ## Chapter 8 Part 1 (physical climate science)
 
-Built so far (2026-08-22): `08a_physics_energy_balance`,
+Built (2026-08-22), Part 1 now complete: `08a_physics_energy_balance`,
 `08b_physics_feedbacks_sensitivity`, `08c_physics_ice_albedo`,
 `08d_physics_bifurcations_chaos`,
-`08e_anthropogenic_temperature_carbon_budget`.
+`08e_anthropogenic_temperature_carbon_budget`,
+`08f_anthropogenic_shares_intensity_multigas`,
+`08g_palaeoclimate_consensus`.
 
-`08e` is data-driven rather than first-principles and doesn't add any
-packaging candidates — its `ols_trend` helper and the fuel-source
-cumulative-share computation are both tied to that notebook's specific
-dataset layouts (OWID/HadCRUT/NOAA/FAOSTAT temperature panels, Global
-Carbon Budget columns), not generic reusable primitives.
+`08e`, `08f`, and `08g` are all data-driven rather than first-principles
+and don't add any packaging candidates — their helpers (`ols_trend`,
+`region_panel`, the deuterium-to-temperature OLS calibration, the
+fuel-source cumulative-share and bibliometric-tabulation computations)
+are all tied to specific dataset layouts (OWID/HadCRUT/NOAA/FAOSTAT
+temperature panels, Global Carbon Budget columns, Vostok ice-core sheets,
+the Highly-Cited-Researchers/Nature-Index tables), not generic reusable
+primitives.
 
 | Function | Defined in | What it does | Why it's a candidate | Status |
 |---|---|---|---|---|
@@ -118,6 +123,82 @@ Carbon Budget columns), not generic reusable primitives.
 | `bisection(f, a, b, tol=1e-10, max_iter=200)` | `08c_physics_ice_albedo.ipynb`, `08d_physics_bifurcations_chaos.ipynb` | Faithful port of `QuantToolbox/optim/bisection.m`, including its specific edge-case contract: returns `NaN` (not an error) when `f(a)` and `f(b)` don't bracket a sign change, rather than assuming a bracket is always valid. | A generic root-finder used throughout the `hfs-archive` MATLAB source wherever `bisection.m` is called. Now reused verbatim in a second notebook (`08d`, to find the cubic normal form's equilibrium in section 4) — the NaN-on-no-bracket behavior matters for correctness of any downstream sweep, so it's worth promoting to a shared `quanttoolbox` helper the next time Chapter 8 needs a root-finder (e.g. DICE equilibria in Part 2). | 🟡 |
 | `ice_albedo(...)` / `ice_albedo_tau(...)` | `08c_physics_ice_albedo.ipynb` | Evaluate the bistable ice-albedo energy-balance model's equilibrium condition and its local relaxation timescale τ=\|c/λ\|, vectorized over a swept parameter. | Tied to this notebook's specific ice-albedo model form (smooth ice-line albedo × single-layer greenhouse) — a plausible reuse if a later Ch.8 notebook revisits the same bistable model (e.g. a coupled or extended version), but not a generic primitive the way `bisection` is. | 🔵 |
 | `missex(x, cond)` | `08d_physics_bifurcations_chaos.ipynb` | Sets elements of `x` to `NaN` wherever `cond` is true, else leaves them unchanged — a direct port of GAUSS's own `missex` function, which the `.m`/GAUSS source uses throughout to split a swept parameter array into a "left of the bifurcation" and "right of the bifurcation" branch for plotting. | A trivial but exact-semantics utility (NaN-masking is easy to get backwards) that will keep recurring anywhere the `hfs-archive` source uses `missex` for branch-splitting — used four times within `08d` section 1 alone. | 🔵 |
+
+## Chapter 9a
+
+Built (2026-08-22): `09a_carbon_budget_accounting.ipynb`, covering all
+7 `chap9_carbon_budget*` scripts (no data dependency — first-principles
+carbon-budget accounting).
+
+| Function | Defined in | What it does | Why it's a candidate | Status |
+|---|---|---|---|---|
+| `carbon_budget_Reduction(t0, t, CE_t0, R, mtd)` | `09a_carbon_budget_accounting.ipynb` | Closed-form carbon budget $\int_{t_0}^t CE(s)\,ds$ under one of three emission-decline paths (linear, compound/geometric, exponential), cross-checked against numerical `quad` integration. | Reimplementation of a `QuantToolbox` function not shipped in `hfs-archive`; reused 3 times within `09a` (once per `mtd`). A generic emissions-pathway integration primitive — any later chapter/notebook needing a closed-form declining-emissions budget (e.g. Ch.10 transition pathways) is a plausible reuse. | 🔵 |
+| `carbon_budget_piecewise(t0, t, t_k, CE_k)` | `09a_carbon_budget_accounting.ipynb`, `09f_transition_pathways_pac_scoring.ipynb` | Piecewise-linear multi-period carbon budget via linear interpolation between knot emission rates and trapezoidal integration. | Also undocumented/unshipped in `hfs-archive`; its output split (originally `CB1`/`CB2`/`CB3` in `09a`, simplified to a single trapezoid-integrated value once reused in `09f` since the `quad`-vs-`trapezoid` cross-check isn't needed a second time) was *inferred* from `chap9_carbon_budget7.m`'s inline equivalent computation, not verified against an original function body — flagged as inferred-not-verified in both notebooks. Now used in 2 notebooks — promoted to 🟡. | 🟡 |
+
+## Chapter 9b
+
+Built (2026-08-22): `09b_ghg_protocol_worked_examples.ipynb`, covering
+the archive's `chap9_carbon_scope1-5,10,11` scripts (`scope7` skipped as
+a duplicate of `scope5`). All sections here are one-off worked-example
+tables/prints or a single real-data chart, tied to this notebook's
+specific inputs — nothing generic enough to track as a packaging
+candidate (unlike `09a`'s two reimplemented carbon-budget functions).
+
+## Chapter 9c
+
+Built (2026-08-22): `09c_sector_carbon_intensity_trucost_msci.ipynb`, a
+thin single-section notebook (`chap9_carbon_ci1.m` only — `ci2`/`ci4`
+are data-blocked, see `chapter9_scoping.md`). The dollar-weighted
+"WACI-style" vs. naive-weighted-average portfolio carbon-intensity
+blending logic is fully inlined into one worked-example cell, not
+factored into a named function — reused nowhere else in this notebook,
+so nothing tracked as a packaging candidate here.
+
+## Chapter 9d
+
+Built (2026-08-22): `09d_gwp_radiative_forcing.ipynb`, covering all 7
+`chap9_gwp*` scripts (`gwp2f` folded into `gwp2a`'s section). The
+Bern-model decay/AGWP functions are tied to this notebook's specific
+CO2/CH4 physical constants (radiative efficiencies, decay time
+constants) taken directly from the source — a generic-looking shape,
+but not worth abstracting into a named reusable function unless a later
+chapter needs GWP physics for a *different* gas (N2O, HFCs), at which
+point the constants (not the functional form) would need to change
+anyway. Nothing tracked as a packaging candidate.
+
+## Chapter 9e
+
+Built (2026-08-22): `09e_emission_trend_forecasting.ipynb`, covering all
+6 `chap9_carbon_trend*` scripts. This is the first Chapter 9 notebook to
+draw on the real `quanttoolbox` package rather than defining everything
+inline — `quanttoolbox.econometrics.kalman.StateSpaceModel`/
+`kalman_filter` and `quanttoolbox.econometrics.whittle.
+whittle_local_linear_trend` are used as-is (already ported, not
+reimplemented here), so nothing new is tracked as a packaging candidate
+from this notebook; the state-space machinery already lives where it
+belongs.
+
+## Chapter 9f
+
+Built (2026-08-22): `09f_transition_pathways_pac_scoring.ipynb`,
+covering `chap9_carbon_pac1-5` plus 3 orphaned addenda scripts
+(`carbon_offsetting2`, `consolidation1`, `greenness_grs1`). Reuses
+`carbon_budget_piecewise` from `09a` (see the Chapter 9a entry above,
+now promoted to 🟡). Everything else — the sector rebasing table, the
+trend/target/NZE comparison chart, the simplified PAC score-trajectory
+panels, and the archetype radar charts — is tied to this notebook's own
+illustrative figures/data, not a generic reusable primitive. Nothing
+new tracked as a packaging candidate.
+
+## Chapter 9g
+
+Built (2026-08-22), completing Chapter 9: `09g_cdp_netzero_tracking.ipynb`
+(`tale1-3`; `tale4`/`tale5` confirmed data-blocked — see
+`chapter9_scoping.md`).
+
+| Function | Defined in | What it does | Why it's a candidate | Status |
+|---|---|---|---|---|
+| `tale_chart(ax, raw, ylim, yticks)` | `09g_cdp_netzero_tracking.ipynb` | Renders the "track record / 2020 trend / targets / NZE scenario" comparison chart from a 5-row raw data matrix: normalizes to a 2013 baseline, splits into the 4 labeled curves, PCHIP-smooths each between its own real data points, and straight-line-extrapolates the 2020 trend. | A generic "actual vs. extrapolated-trend vs. target vs. scenario" chart shape — reused 3 times verbatim within `09g` alone (`tale1`/`tale2`/`tale3`). The identical pattern also appears in `09f`'s `pac2` figure (built manually there, not via this helper, since `pac2` only has one scenario per line rather than 5 raw series to reduce) — a plausible second-notebook consolidation if Chapter 10's transition-pathway content needs the same shape again. | 🔵 |
 
 ## Chapter 5f
 
