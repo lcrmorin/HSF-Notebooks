@@ -12,13 +12,19 @@ The notebooks follow the book's own chapter structure (1. Introduction,
 notebooks themselves, plus whatever small sample data each one needs to
 run.
 
+## Navigation
+
+The collection contains **83 notebooks**. Start with the [notebook index](INDEX.md),
+which lists each lesson and the original section codes combined within merged lessons.
+Merged notebooks have a contents list and retain local exercise numbers within each part.
+
 ## Structure
 
 ```
 notebooks/
-  hsf/          one notebook per HSF chapter -- 00 = tutorial, 01-17 = book
-                chapters; a chapter big enough to split into clearly
-                separate topics gets a lettered pair instead (02a, 02b, ...)
+  hsf/          lessons grouped by HSF chapter; 00 = tutorial.
+                Letters identify topics; combined letters identify merged
+                lessons (for example, 13ef combines baseline and stressed transitions).
 data/           small sample datasets a notebook reads directly (xlsx/csv);
                 large or licensed source data stays out of git — see each
                 chapter notebook's own data-provenance note
@@ -49,6 +55,36 @@ source .venv/bin/activate
 pip install -r requirements.txt
 jupyter lab
 ```
+
+## Execution audit
+
+On 2026-10-11, all **83 notebooks** ran successfully from fresh kernels
+against the sibling `QuantToolBox/src` checkout: **940 code cells** and
+**424 PNG figures**, with no error outputs or emitted notebook warnings
+on the final runs. Outputs were refreshed and notebook formats validated.
+Representative figures were visually checked; this is an execution audit,
+not an independent verification of every model or dataset.
+
+The audit added the missing `xlrd` dependency for the palaeoclimate `.xls`
+file and improved crowded date labels in the greenium charts. Existing
+notebook warning filters remain in place. See the
+[execution report](reports/notebook-execution.json) for individual timings,
+dependency versions, source hashes, and rechecks.
+
+To repeat the audit from this directory after the setup above:
+
+```bash
+python -m ipykernel install --sys-prefix --name hsf-notebooks
+PYTHONPATH="../QuantToolBox/src" python scripts/execute_notebooks.py --kernel hsf-notebooks
+```
+
+The runner starts a fresh kernel for each lesson and refreshes successful
+notebook outputs, so back up any outputs you want to retain. Failed runs
+leave the original notebook intact and save a partial copy in
+`reports/failed/`. Use `--pattern '04c*'` to rerun a lesson, `--jobs 1` to
+reduce memory use, or `--timeout 1200` to allow longer individual cells on
+slower machines. A subset run replaces the report unless `--report` names
+a separate file.
 
 ## Data provenance
 

@@ -1,5 +1,16 @@
 # Session handoff — HSF MATLAB → Python translation project
 
+> Execution audit (2026-10-11): all 83 notebooks passed in fresh kernels
+> against the local toolbox; outputs refreshed, 940 code cells executed,
+> and no emitted notebook warnings on final runs. See
+> [README.md](README.md#execution-audit) and
+> [the execution report](reports/notebook-execution.json).
+>
+> Current layout: the collection contains 83 notebooks after ten merges.
+> Read [INDEX.md](INDEX.md) and [CHAPTERS.md](CHAPTERS.md) for current filenames
+> and scope. The progress snapshot and outstanding-commit list below are historical.
+
+
 Read this first in any new session before doing anything else. It's the
 continuity note for a long-running project translating Thierry Roncalli's
 `hfs-archive` MATLAB/GAUSS toolbox (companion to *Handbook of Sustainable
